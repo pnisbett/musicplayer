@@ -1,0 +1,265 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              xmlns:tools="http://schemas.android.com/tools"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent"
+              android:background="#FF330000"
+              android:orientation="vertical"
+    android:focusable="true"
+    android:focusableInTouchMode="true"
+              tools:context=".MainActivity"
+
+    >
+
+    <LinearLayout android:layout_width="wrap_content"
+                  android:layout_height="wrap_content"
+                  android:orientation="vertical"
+    >
+        <GridLayout
+            android:id="@+id/gl1"
+            android:layout_width="wrap_content"
+            android:layout_height="120dp"
+            android:layout_marginBottom="@dimen/activity_horizontal_margin"
+            android:columnCount="6"
+
+            android:orientation="horizontal"
+
+            android:rowCount="5">
+            <Button
+                android:id="@+id/lyricButton"
+                android:layout_width="wrap_content"
+                android:layout_height="40dp"
+                android:layout_column="0"
+                android:layout_row="0"
+                android:text="Mode"
+            />
+            <RadioGroup
+                android:id="@+id/rg"
+                android:layout_width="wrap_content"
+                android:layout_height="40dp"
+                android:layout_column="1"
+                android:layout_row="0"
+                android:checkedButton="@+id/radioButton2"
+                android:orientation="horizontal"
+
+                android:weightSum="1">
+                <RadioButton
+                    android:id="@+id/radioButton2"
+                    android:layout_width="wrap_content"
+                    android:layout_height="40dp"
+                    android:text="show song list"
+                    android:textColor="#FFFFFF"/>
+                <RadioButton
+                    android:id="@+id/radioButton1"
+                    android:layout_width="wrap_content"
+                    android:layout_height="40dp"
+                    android:text="show lyrics"
+                    android:textColor="#FFFFFF"/>
+
+
+            </RadioGroup>
+
+            <RadioGroup
+                android:id="@+id/rg2"
+                android:layout_width="wrap_content"
+                android:layout_height="40dp"
+                android:layout_column="1"
+                android:layout_row="1"
+                android:checkedButton="@+id/radioButton3"
+                android:orientation="horizontal"
+                android:weightSum="1">
+                <RadioButton
+                    android:id="@+id/radioButton3"
+                    android:layout_width="wrap_content"
+                    android:layout_height="40dp"
+                    android:layout_marginBottom="1dp"
+                    android:layout_marginLeft="0dp"
+                    android:layout_marginStart="0dp"
+                    android:text="search artist"
+                    android:textColor="#FFFFFF"
+                />
+
+                <RadioButton
+                    android:id="@+id/radioButton4"
+                    android:layout_width="wrap_content"
+                    android:layout_height="40dp"
+                    android:text="search song"
+                    android:textColor="#FFFFFF"/>
+            </RadioGroup>
+
+
+            <Button
+                android:id="@+id/searchButton"
+                android:layout_width="wrap_content"
+                android:layout_height="40dp"
+                android:layout_column="0"
+                android:layout_row="1"
+                android:text="Search"
+            />
+
+            <EditText
+                android:id="@+id/txtSearch1"
+                android:layout_width="match_parent"
+                android:layout_height="20dp"
+                android:layout_column="0"
+                android:layout_columnSpan="2"
+                android:layout_row="3"
+                android:background="@color/WHITE"
+                android:textColor="@color/BlACK"
+                android:ems="10"
+                android:hint="type a search term or leave blank for all"
+                android:inputType="text"
+
+
+            />
+            <EditText
+                android:id="@+id/txtSearch"
+                android:hint="type a search term or leave blank for all"
+                android:layout_width="200dp"
+                android:layout_height="40dp"
+                android:layout_column="0"
+                android:layout_columnSpan="1"
+                android:layout_row="2"
+                android:background="@color/WHITE"
+                android:textColor="@color/BlACK"
+                android:inputType="text"
+             />
+
+             <TextView
+                android:id="@+id/lastSearch"
+                android:layout_width="200dp"
+                android:layout_height="40dp"
+                android:layout_column="1"
+                android:layout_columnSpan="2"
+                android:layout_row="2"
+
+
+                android:ems="10"
+                android:hint="Last Search"
+                android:inputType="text"
+
+                android:textSize="18sp"
+                android:visibility="visible"
+                 android:focusable="true"
+                 android:focusableInTouchMode="true"
+                 />
+        </GridLayout>
+<!-- LinearLayout
+    android:layout_width="match_parent"
+    android:layout_height="200dp"
+    android:layoutDirection="ltr">
+    <EditText
+             android:id="@+id/txtSearch4"
+             android:layout_width="200dp"
+        android:text="txtSearch  lower"
+             android:layout_height="25dp"
+
+             android:hint="type a search term or leave blank for all"
+             android:inputType="text"
+
+        android:visibility="visible"
+         />
+
+</LinearLayout -->
+        <FrameLayout android:id="@+id/fl1"
+                     android:layout_width="match_parent"
+                     android:layout_height="fill_parent"
+                     android:layout_below="@id/gl1"
+                     android:layout_marginBottom="@dimen/activity_vertical_margin"
+
+        >
+
+
+            <LinearLayout
+                android:id="@+id/mainview"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/colorPrimary"
+                android:orientation="vertical"
+
+            >
+
+
+                    <ListView
+
+                        android:id="@+id/song_list"
+                        android:layout_width="fill_parent"
+                        android:layout_height="match_parent"
+                        android:layout_marginBottom="@dimen/activity_horizontal_margin"
+                        android:layout_marginTop="@dimen/activity_vertical_margin">
+                        <requestFocus />
+                    </ListView>
+
+
+
+            </LinearLayout>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/activity_horizontal_margin"
+                android:orientation="vertical">
+                <TextView
+                    android:id="@+id/txtLyric"
+                    android:layout_width="match_parent"
+
+                    android:layout_height="wrap_content"
+                    android:singleLine="false"
+                    android:textColor="#FFFFFFFF"
+                />
+            </LinearLayout>
+</FrameLayout>
+            <!--
+            <LinearLayout
+
+                android:orientation="vertical"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+            >
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:gravity="center">
+                <ProgressBar
+                    android:id="@+id/progressBar"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:indeterminate="true"
+                    android:layout_centerHorizontal="true"
+                    android:visibility="gone" />
+                <ScrollView
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
+                    <TextView
+                        android:id="@+id/responseView"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content" />
+               </ScrollView>
+            </RelativeLayout>
+    </LinearLayout>
+
+
+
+
+    -->
+
+
+
+
+    </LinearLayout>
+    <LinearLayout
+        android:id="@+id/controllerview"
+
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/colorPrimary"
+        android:orientation="horizontal"
+        android:layout_alignParentBottom="true"
+    ></LinearLayout>
+    <LinearLayout
+        android:id="@+id/keyboardview"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+    </LinearLayout>
+</RelativeLayout>
