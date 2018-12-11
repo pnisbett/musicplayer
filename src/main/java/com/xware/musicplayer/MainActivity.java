@@ -146,7 +146,7 @@ public class MainActivity extends Activity implements MediaPlayerControl {
             bSearch.setVisibility(View.VISIBLE);
             txtSearch.setVisibility(View.VISIBLE);
             controller.setVisibility(View.VISIBLE);
-         
+
         } else {
          //   controller.setVisibility(View.GONE);
         //    controller.hide();
@@ -452,6 +452,7 @@ Log.e("search change !!!"," Search Text "+txtSearch.getText()+ " that was the te
 
                 // Perform action on click
                 toggleSearch();
+                if (searchTerm.length()>0){
                 if (filter.equals("a")){
 
                     getSongListFiltered(searchTerm,null);
@@ -480,14 +481,22 @@ Log.e("search change !!!"," Search Text "+txtSearch.getText()+ " that was the te
 
                 }
 
-                else{
+                else {
                     getSongList();
                     Collections.sort(songList, new Comparator<Song>() {
                         public int compare(Song a, Song b) {
                             return a.getTitle().compareTo(b.getTitle());
                         }
                     });
-
+                }
+                }
+                else {
+                        getSongList();
+                        Collections.sort(songList, new Comparator<Song>() {
+                            public int compare(Song a, Song b) {
+                                return a.getTitle().compareTo(b.getTitle());
+                            }
+                        });
                     SongAdapter songAdt = new SongAdapter(getBaseContext(), songList);
                     songView.setAdapter(songAdt);
                  //   setController();

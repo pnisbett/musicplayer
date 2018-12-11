@@ -11,50 +11,58 @@
 
     >
 
-    <LinearLayout android:layout_width="wrap_content"
-                  android:layout_height="wrap_content"
-                  android:orientation="vertical"
-    >
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentTop="true"
+        android:orientation="vertical">
+
         <GridLayout
             android:id="@+id/gl1"
             android:layout_width="wrap_content"
-            android:layout_height="220dp"
+            android:layout_height="wrap_content"
             android:layout_marginBottom="@dimen/activity_horizontal_margin"
             android:columnCount="4"
 
             android:orientation="horizontal"
 
             android:rowCount="3">
+
+
             <Button
                 android:id="@+id/lyricButton"
                 android:layout_width="wrap_content"
                 android:layout_height="40dp"
-                android:layout_column="0"
                 android:layout_row="0"
-                android:text="Mode"
-            />
+                android:layout_column="0"
+                android:text="Mode" />
+
             <RadioGroup
                 android:id="@+id/rg"
                 android:layout_width="wrap_content"
                 android:layout_height="40dp"
-                android:layout_column="1"
                 android:layout_row="0"
+                android:layout_column="1"
                 android:checkedButton="@+id/radioButton2"
                 android:orientation="horizontal"
 
                 android:weightSum="1">
+
                 <RadioButton
                     android:id="@+id/radioButton2"
                     android:layout_width="wrap_content"
                     android:layout_height="40dp"
                     android:text="show song list"
-                    android:textColor="#FFFFFF"/>
+                    android:textColor="#FFFFFF" />
+
                 <RadioButton
                     android:id="@+id/radioButton1"
                     android:layout_width="wrap_content"
                     android:layout_height="40dp"
                     android:text="show lyrics"
-                    android:textColor="#FFFFFF"/>
+                    android:textColor="#FFFFFF" />
 
 
             </RadioGroup>
@@ -63,28 +71,28 @@
                 android:id="@+id/rg2"
                 android:layout_width="wrap_content"
                 android:layout_height="40dp"
-                android:layout_column="1"
                 android:layout_row="1"
+                android:layout_column="1"
                 android:checkedButton="@+id/radioButton3"
                 android:orientation="horizontal"
                 android:weightSum="1">
+
                 <RadioButton
                     android:id="@+id/radioButton3"
-                    android:layout_width="wrap_content"
+                    android:layout_width="120dp"
                     android:layout_height="40dp"
-                    android:layout_marginBottom="1dp"
-                    android:layout_marginLeft="0dp"
                     android:layout_marginStart="0dp"
+                    android:layout_marginLeft="0dp"
+                    android:layout_marginBottom="1dp"
                     android:text="search artist"
-                    android:textColor="#FFFFFF"
-                />
+                    android:textColor="#FFFFFF" />
 
                 <RadioButton
                     android:id="@+id/radioButton4"
                     android:layout_width="wrap_content"
                     android:layout_height="40dp"
                     android:text="search song"
-                    android:textColor="#FFFFFF"/>
+                    android:textColor="#FFFFFF" />
             </RadioGroup>
 
 
@@ -92,26 +100,11 @@
                 android:id="@+id/searchButton"
                 android:layout_width="wrap_content"
                 android:layout_height="40dp"
-                android:layout_column="0"
                 android:layout_row="1"
-                android:text="Search"
-            />
-
-            <EditText
-                android:id="@+id/txtSearch"
-                android:layout_width="match_parent"
-                android:layout_height="20dp"
                 android:layout_column="0"
-                android:layout_columnSpan="2"
-                android:layout_row="2"
-                android:background="@color/WHITE"
-                android:textColor="@color/BlACK"
-                android:ems="10"
-                android:hint="type a search term or leave blank for all"
-                android:inputType="text"
+                android:text="Search" />
 
 
-            />
             <!--
             <EditText
                 android:id="@+id/txtSearch1"
@@ -142,30 +135,46 @@
                 android:layout_row="4"
                 android:text="dodododo"/>
 -->
-             <TextView
-                android:id="@+id/lastSearch"
-                android:layout_width="200dp"
-                android:layout_height="40dp"
-                android:layout_column="1"
-                android:layout_columnSpan="2"
-                android:layout_row="2"
-
-
-                android:ems="10"
-                android:hint="Last Search"
-                android:inputType="text"
-
-                android:textSize="18sp"
-                android:visibility="visible"
-                 android:focusable="true"
-                 android:focusableInTouchMode="true"
-                 />
         </GridLayout>
-<!-- LinearLayout
+<LinearLayout
+    android:id="@+id/llsearch"
     android:layout_width="match_parent"
-    android:layout_height="200dp"
-    android:layoutDirection="ltr">
-    <EditText
+    android:layout_height="25dp">
+        <EditText
+            android:id="@+id/txtSearch"
+            android:layout_width="160dp"
+            android:layout_height="40dp"
+            android:layout_row="2"
+            android:layout_column="0"
+            android:layout_columnSpan="2"
+            android:background="@color/WHITE"
+
+            android:hint="type a search term or leave blank for all"
+            android:inputType="text"
+            android:textColor="@color/BlACK"
+
+
+            />
+
+        <TextView
+            android:id="@+id/lastSearch"
+            android:layout_width="160dp"
+            android:layout_height="40dp"
+            android:layout_row="2"
+            android:layout_column="2"
+            android:layout_columnSpan="2"
+android:layout_marginLeft="10dp"
+
+
+            android:focusable="true"
+            android:focusableInTouchMode="true"
+
+            android:hint="Last Search"
+            android:inputType="text"
+            android:textSize="18sp"
+            android:visibility="visible" />
+</LinearLayout>
+    <!--EditText
              android:id="@+id/txtSearch4"
              android:layout_width="200dp"
         android:text="txtSearch  lower"
@@ -175,16 +184,17 @@
              android:inputType="text"
 
         android:visibility="visible"
-         />
+         / -->
 
-</LinearLayout -->
-        <FrameLayout android:id="@+id/fl1"
-                     android:layout_width="match_parent"
-                     android:layout_height="fill_parent"
-                     android:layout_below="@id/gl1"
-                     android:layout_marginBottom="@dimen/activity_vertical_margin"
+       <FrameLayout
+            android:id="@+id/fl1"
+            android:layout_width="match_parent"
+            android:layout_height="fill_parent"
+            android:layout_below="@id/llsearch"
+            android:layout_marginBottom="35dp"
+           android:layout_marginTop="20dp"
 
-        >
+            >
 
 
             <LinearLayout
@@ -194,38 +204,41 @@
                 android:background="@color/colorPrimary"
                 android:orientation="vertical"
 
-            >
+                android:paddingTop="10dp"
+
+                >
 
 
-                    <ListView
+                <ListView
 
-                        android:id="@+id/song_list"
-                        android:layout_width="fill_parent"
-                        android:layout_height="match_parent"
-                        android:layout_marginBottom="@dimen/activity_horizontal_margin"
-                        android:layout_marginTop="@dimen/activity_vertical_margin">
-                        <requestFocus />
-                    </ListView>
+                    android:id="@+id/song_list"
+                    android:layout_width="fill_parent"
+                    android:layout_height="match_parent"
+                    android:layout_marginTop="@dimen/activity_vertical_margin"
+                    android:layout_marginBottom="@dimen/activity_horizontal_margin">
 
+                    <requestFocus />
+                </ListView>
 
 
             </LinearLayout>
+
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/activity_horizontal_margin"
                 android:orientation="vertical">
+
                 <TextView
                     android:id="@+id/txtLyric"
                     android:layout_width="match_parent"
 
                     android:layout_height="wrap_content"
                     android:singleLine="false"
-                    android:textColor="#FFFFFFFF"
-                />
+                    android:textColor="#FFFFFFFF" />
             </LinearLayout>
-</FrameLayout>
-            <!--
+        </FrameLayout>
+        <!--
             <LinearLayout
 
                 android:orientation="vertical"
@@ -258,8 +271,6 @@
 
 
     -->
-
-
 
 
     </LinearLayout>
