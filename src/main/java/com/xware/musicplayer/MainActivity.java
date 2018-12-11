@@ -116,9 +116,11 @@ public class MainActivity extends Activity implements MediaPlayerControl {
     RadioButton rbSearchSong ;
     Button bSearch ;
     EditText txtSearch;
+    EditText txtSearch1;
+    EditText txtSearch2;
     RadioGroup r;
     ListView lvSonglist;
-    TextView l;
+    TextView lyric;
     TextView tvLastSearch;
     public MainActivity() {
 
@@ -138,21 +140,24 @@ public class MainActivity extends Activity implements MediaPlayerControl {
        //         controller.show(0);
             lvSonglist.setVisibility(View.VISIBLE);
 
-            l.setVisibility(View.GONE);
+            lyric.setVisibility(View.GONE);
             rbSearchArtist.setVisibility(View.VISIBLE);
             rbSearchSong.setVisibility(View.VISIBLE);
             bSearch.setVisibility(View.VISIBLE);
             txtSearch.setVisibility(View.VISIBLE);
+            controller.setVisibility(View.VISIBLE);
+         
         } else {
-            controller.setVisibility(View.GONE);
+         //   controller.setVisibility(View.GONE);
         //    controller.hide();
             lvSonglist.setVisibility(View.GONE);
-            l.setVisibility(View.VISIBLE);
+            lyric.setVisibility(View.VISIBLE);
             rbSearchArtist.setVisibility(View.GONE);
             rbSearchSong.setVisibility(View.GONE);
             bSearch.setVisibility(View.GONE);
             txtSearch.setVisibility(View.GONE);
             tvLastSearch.setVisibility(View.GONE);
+            controller.setVisibility(View.INVISIBLE);
         }
 
     }
@@ -168,12 +173,12 @@ public class MainActivity extends Activity implements MediaPlayerControl {
         RadioButton rbSearchArtist = (RadioButton) findViewById(R.id.radioButton3);
     ;
       // txtSearch = (EditText) findViewById(R.id.txtSearch);
-        String txt=txtSearch.getText().toString();
+    //    String txt=txtSearch.getText().toString();
         //   InputMethodManager imm = (InputMethodManager)getSystemService(Context.INPUT_METHOD_SERVICE);
         // imm.hideSoftInputFromWindow(l.getWindowToken(), 0);
         // l.setText("rb id ="+i +"\n"+"viewvisible="+View.VISIBLE+"\n"+"view gone= "+View.GONE);
-        this.filter="";
-        if (!txt.equals("")){
+     //   this.filter="";
+     //   if (!txt.equals("")){
         if (rbSearchArtist.isChecked()) {
             this.filter="a";
         //    lvSonglist.setVisibility(View.VISIBLE);
@@ -185,7 +190,7 @@ public class MainActivity extends Activity implements MediaPlayerControl {
 
         //    l.setVisibility(View.VISIBLE);
         }
-        }
+    //    }
 
     }
   /*  public static boolean hasPermissions(Context context, String... permissions) {
@@ -212,7 +217,9 @@ public class MainActivity extends Activity implements MediaPlayerControl {
         rbSearchSong = (RadioButton) findViewById(R.id.radioButton4);
         bSearch = (Button) findViewById(R.id.searchButton);
         txtSearch = (EditText) findViewById(R.id.txtSearch);
-        l = (TextView) findViewById(R.id.txtLyric);
+      //  txtSearch1=(EditText) findViewById(R.id.txtSearch1);
+      //  txtSearch2=(EditText) findViewById(R.id.txtSearch2);
+        lyric = (TextView) findViewById(R.id.txtLyric);
         tvLastSearch= (TextView)findViewById(lastSearch);
         r = (RadioGroup) findViewById(R.id.rg);
         lvSonglist = (ListView) findViewById(R.id.song_list);
@@ -221,9 +228,9 @@ public class MainActivity extends Activity implements MediaPlayerControl {
         rbSearchArtist = (RadioButton) findViewById(R.id.radioButton3);
         rbSearchSong = (RadioButton) findViewById(R.id.radioButton4);
         bSearch = (Button) findViewById(R.id.searchButton);
-        txtSearch = (EditText) findViewById(R.id.txtSearch);
 
-        l = (TextView) findViewById(R.id.txtLyric);
+
+        lyric = (TextView) findViewById(R.id.txtLyric);
         tvLastSearch= (TextView)findViewById(lastSearch);
 
         setController();
@@ -235,12 +242,14 @@ public class MainActivity extends Activity implements MediaPlayerControl {
 
          @Override
          public boolean onTouch(View v, MotionEvent event) {
-             controller.hide();
+         /*    controller.hide();
+             txtSearch2.setText("txtSearch onTouchListener called onTouch");
              if (v.hasFocus())
-                 txtSearch.setText("fuck android ontouch clickdd has focusr");
+                 txtSearch.setText("ontouch clickdd has focusr");
              else
-                 txtSearch.setText("Never called!!!! notfocused ontouch clicked lost focus");
-txtSearch.setTextColor(colorPrimary);
+                 txtSearch.setText("notfocused ontouch clicked lost focus");
+                 */
+//txtSearch.setTextColor(colorPrimary);
              //  }
              //      if (v.isSelected() ) {
       /*       if (v.hasFocus()){
@@ -293,12 +302,13 @@ txtSearch.setTextColor(colorPrimary);
      });
 
 
-        //     tsearch.onWindowFocusChanged();
+    /*    //     tsearch.onWindowFocusChanged();
         tvLastSearch.setOnTouchListener(new View.OnTouchListener() {
 
-            @Override
+        /*    @Override
             public boolean onTouch(View view, MotionEvent event) {
        //         controller.hide();
+
             if (event.getAction() == MotionEvent.ACTION_DOWN ) {
                //  controller.hide();
 
@@ -315,18 +325,24 @@ txtSearch.setTextColor(colorPrimary);
 
                 return false;
             }
+
         });
+*/
         txtSearch.setOnFocusChangeListener(new OnFocusChangeListener() {
 
               @Override
               public void   onFocusChange(View v, boolean hasFocus) {
 
+                     //   txtSearch1.setText("txtSearch onFocusChangeListener called onFocusChange");
 
-
-                      if (v.hasFocus())
+                /*      if (v.hasFocus())
                           txtSearch.setText("fuck android "+ ((android.graphics.drawable.ColorDrawable)txtSearch.getBackground()).getColor());
                       else
                           txtSearch.setText("notfocused top");
+                  */
+                   //   if (v.hasFocus() != hasFocus)
+                     //     Toast.makeText(,"onFocusChAnge() v.ahsFocus IS NOT EQUAL TO HAS FOCUS ",Toast.LENGTH_LONG);
+                     //     txtSearch1.setText("onFocusChAnge() v.ahsFocus IS NOT EQUAL TO HAS FOCUS ");
 Log.e("search change !!!"," Search Text "+txtSearch.getText()+ " that was the text in search ");
 
                       if (hasFocus){
@@ -338,8 +354,8 @@ Log.e("search change !!!"," Search Text "+txtSearch.getText()+ " that was the te
                          //    controller.setVisibility(View.INVISIBLE);
                           int count2 = count % 2;
                           count++;
-                          txtSearch.setText("has focus "+count2);
-
+                    //      txtSearch2.setText("tsearch has focus "+count2);
+                          txtSearch.setText("");
                           InputMethodManager imm = (InputMethodManager)getSystemService(Context.INPUT_METHOD_SERVICE);
 
                          View v1= findViewById(R.id.keyboardview);
@@ -347,6 +363,7 @@ Log.e("search change !!!"," Search Text "+txtSearch.getText()+ " that was the te
 //                          controller.hide();
 
                           v.setBackgroundColor(Color.WHITE);
+                          controller.setVisibility(View.INVISIBLE);
 
                       } else {
                           //       controller.setVisibility(View.VISIBLE);
@@ -355,7 +372,7 @@ Log.e("search change !!!"," Search Text "+txtSearch.getText()+ " that was the te
                           InputMethodManager imm = (InputMethodManager)getSystemService(Context.INPUT_METHOD_SERVICE);
                           imm.hideSoftInputFromWindow(v.getWindowToken(), 0);
                            controller.setVisibility(View.VISIBLE);
-                          txtSearch.setText("notfocused");
+                      //    txtSearch2.setText("txtSearch notfocused");
                       }
                       // Context context = v.getContext();
 
@@ -372,7 +389,7 @@ Log.e("search change !!!"," Search Text "+txtSearch.getText()+ " that was the te
 
 
 
-        l.setVisibility(View.INVISIBLE);
+        lyric.setVisibility(View.INVISIBLE);
         //  l.setEnabled(false);
         //   InputMethodManager imm = (InputMethodManager)getSystemService(Context.INPUT_METHOD_SERVICE);
         //  imm.hideSoftInputFromWindow(l.getWindowToken(), 0);
@@ -388,8 +405,8 @@ Log.e("search change !!!"," Search Text "+txtSearch.getText()+ " that was the te
                 if (v != null) {
                     InputMethodManager imm = (InputMethodManager)getSystemService(Context.INPUT_METHOD_SERVICE);
                     imm.hideSoftInputFromWindow(v.getWindowToken(), 0);
-                    if (controller != null)
-                      controller.setVisibility(View.INVISIBLE);
+             //       if (controller != null)
+               //       controller.setVisibility(View.INVISIBLE);
                 }
                 Log.i(" paths", "base context path " + getBaseContext() + "");
 
@@ -426,7 +443,8 @@ Log.e("search change !!!"," Search Text "+txtSearch.getText()+ " that was the te
                     InputMethodManager imm = (InputMethodManager)getSystemService(Context.INPUT_METHOD_SERVICE);
                     imm.hideSoftInputFromWindow(v.getWindowToken(), 0);
                 }
-                TextView searchTerm = (TextView) findViewById(R.id.txtSearch);
+             //   TextView searchTerm = (TextView) findViewById(R.id.txtSearch);
+                String searchTerm=txtSearch.getText().toString() ;
                 Log.i(" paths", "base context path " + getBaseContext() + "");
 
 
@@ -436,7 +454,7 @@ Log.e("search change !!!"," Search Text "+txtSearch.getText()+ " that was the te
                 toggleSearch();
                 if (filter.equals("a")){
 
-                    getSongListFiltered(searchTerm.getText().toString(),null);
+                    getSongListFiltered(searchTerm,null);
                     Collections.sort(songList, new Comparator<Song>() {
                         public int compare(Song a, Song b) {
                             return a.getTitle().compareTo(b.getTitle());
@@ -449,7 +467,7 @@ Log.e("search change !!!"," Search Text "+txtSearch.getText()+ " that was the te
 
                 }
                 else if (filter.equals("s")){
-                    getSongListFiltered(null,searchTerm.getText().toString());
+                    getSongListFiltered(null,searchTerm);
                     Collections.sort(songList, new Comparator<Song>() {
                         public int compare(Song a, Song b) {
                             return a.getTitle().compareTo(b.getTitle());
@@ -478,8 +496,8 @@ Log.e("search change !!!"," Search Text "+txtSearch.getText()+ " that was the te
                 TextView tvLastSearch= (TextView)findViewById(lastSearch);
                 tvLastSearch.setBackgroundColor(Color.CYAN);
                 tvLastSearch.setTextColor(Color.BLACK);
-                tvLastSearch.setText(searchTerm.getText().toString()+"");
-                searchTerm.setText("");
+                tvLastSearch.setText(searchTerm+"");
+                txtSearch.setText("");
                 tvLastSearch.setVisibility(View.VISIBLE);
                 tvLastSearch.requestFocus();
 
