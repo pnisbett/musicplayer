@@ -390,6 +390,7 @@ public class MusicService extends Service  implements
 
         builder.setContentIntent(pendInt)
                 .setSmallIcon(R.drawable.play)
+           //     .setSmallIcon(R.drawable.rand)//change to pause icon
                 .setTicker(songTitle)
                 .setOngoing(true)
                 .setContentTitle("Playing")

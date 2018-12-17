@@ -12,6 +12,7 @@ import android.content.ServiceConnection;
 import android.content.pm.PackageManager;
 import android.database.Cursor;
 import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Build;
@@ -114,7 +115,7 @@ public class MainActivity extends Activity implements MediaPlayerControl {
     RadioButton rbSonglist;
     RadioButton rbSearchArtist;
     RadioButton rbSearchSong ;
-    Button bSearch ;
+   // Button bSearch ;
     EditText txtSearch;
     EditText txtSearch1;
     EditText txtSearch2;
@@ -122,6 +123,9 @@ public class MainActivity extends Activity implements MediaPlayerControl {
     ListView lvSonglist;
     TextView lyric;
     TextView tvLastSearch;
+    Button btnSearch;
+    View lastSong;
+
     public MainActivity() {
 
     }
@@ -143,7 +147,7 @@ public class MainActivity extends Activity implements MediaPlayerControl {
             lyric.setVisibility(View.GONE);
             rbSearchArtist.setVisibility(View.VISIBLE);
             rbSearchSong.setVisibility(View.VISIBLE);
-            bSearch.setVisibility(View.VISIBLE);
+            btnSearch.setVisibility(View.VISIBLE);
             txtSearch.setVisibility(View.VISIBLE);
             controller.setVisibility(View.VISIBLE);
 
@@ -154,7 +158,7 @@ public class MainActivity extends Activity implements MediaPlayerControl {
             lyric.setVisibility(View.VISIBLE);
             rbSearchArtist.setVisibility(View.GONE);
             rbSearchSong.setVisibility(View.GONE);
-            bSearch.setVisibility(View.GONE);
+            btnSearch.setVisibility(View.GONE);
             txtSearch.setVisibility(View.GONE);
             tvLastSearch.setVisibility(View.GONE);
             controller.setVisibility(View.INVISIBLE);
@@ -172,23 +176,14 @@ public class MainActivity extends Activity implements MediaPlayerControl {
         int i = r.getCheckedRadioButtonId();
         RadioButton rbSearchArtist = (RadioButton) findViewById(R.id.radioButton3);
     ;
-      // txtSearch = (EditText) findViewById(R.id.txtSearch);
-    //    String txt=txtSearch.getText().toString();
-        //   InputMethodManager imm = (InputMethodManager)getSystemService(Context.INPUT_METHOD_SERVICE);
-        // imm.hideSoftInputFromWindow(l.getWindowToken(), 0);
-        // l.setText("rb id ="+i +"\n"+"viewvisible="+View.VISIBLE+"\n"+"view gone= "+View.GONE);
-     //   this.filter="";
-     //   if (!txt.equals("")){
+
         if (rbSearchArtist.isChecked()) {
             this.filter="a";
-        //    lvSonglist.setVisibility(View.VISIBLE);
+
 
         } else {
             this.filter="s";
 
-        //    lvSonglist.setVisibility(View.GONE);
-
-        //    l.setVisibility(View.VISIBLE);
         }
     //    }
 
@@ -215,28 +210,19 @@ public class MainActivity extends Activity implements MediaPlayerControl {
         rbSonglist = (RadioButton) findViewById(R.id.radioButton2);
         rbSearchArtist = (RadioButton) findViewById(R.id.radioButton3);
         rbSearchSong = (RadioButton) findViewById(R.id.radioButton4);
-        bSearch = (Button) findViewById(R.id.searchButton);
+        btnSearch = (Button) findViewById(R.id.searchButton);
         txtSearch = (EditText) findViewById(R.id.txtSearch);
       //  txtSearch1=(EditText) findViewById(R.id.txtSearch1);
       //  txtSearch2=(EditText) findViewById(R.id.txtSearch2);
         lyric = (TextView) findViewById(R.id.txtLyric);
         tvLastSearch= (TextView)findViewById(lastSearch);
         r = (RadioGroup) findViewById(R.id.rg);
-        lvSonglist = (ListView) findViewById(R.id.song_list);
-        rbLyrics = (RadioButton) findViewById(R.id.radioButton1);
-        rbSonglist = (RadioButton) findViewById(R.id.radioButton2);
-        rbSearchArtist = (RadioButton) findViewById(R.id.radioButton3);
-        rbSearchSong = (RadioButton) findViewById(R.id.radioButton4);
-        bSearch = (Button) findViewById(R.id.searchButton);
-
-
         lyric = (TextView) findViewById(R.id.txtLyric);
-        tvLastSearch= (TextView)findViewById(lastSearch);
-
-        setController();
 
 
-   //     tsearch.onWindowFocusChanged();
+        getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_UNCHANGED);
+
+
      txtSearch.setOnTouchListener(new View.OnTouchListener() {
 
 
@@ -281,7 +267,7 @@ public class MainActivity extends Activity implements MediaPlayerControl {
                  tsearch.setText("notfocused");
              }
             // Context context = v.getContext();
-*/
+
 
         /*     if (event.getAction() == MotionEvent.ACTION_DOWN ) {
                //  controller.hide();
@@ -302,10 +288,10 @@ public class MainActivity extends Activity implements MediaPlayerControl {
      });
 
 
-    /*    //     tsearch.onWindowFocusChanged();
-        tvLastSearch.setOnTouchListener(new View.OnTouchListener() {
+      //     tsearch.onWindowFocusChanged() -- window encapsulating the view focus has changed
+  /*      tvLastSearch.setOnTouchListener(new View.OnTouchListener() {
 
-        /*    @Override
+            @Override
             public boolean onTouch(View view, MotionEvent event) {
        //         controller.hide();
 
@@ -333,51 +319,63 @@ public class MainActivity extends Activity implements MediaPlayerControl {
               @Override
               public void   onFocusChange(View v, boolean hasFocus) {
 
-                     //   txtSearch1.setText("txtSearch onFocusChangeListener called onFocusChange");
-
-                /*      if (v.hasFocus())
-                          txtSearch.setText("fuck android "+ ((android.graphics.drawable.ColorDrawable)txtSearch.getBackground()).getColor());
-                      else
-                          txtSearch.setText("notfocused top");
-                  */
-                   //   if (v.hasFocus() != hasFocus)
-                     //     Toast.makeText(,"onFocusChAnge() v.ahsFocus IS NOT EQUAL TO HAS FOCUS ",Toast.LENGTH_LONG);
-                     //     txtSearch1.setText("onFocusChAnge() v.ahsFocus IS NOT EQUAL TO HAS FOCUS ");
 Log.e("search change !!!"," Search Text "+txtSearch.getText()+ " that was the text in search ");
-
+                      // 1) v.isFocused() specfic view has focus
+                      // 2) v.hasfocus view group has focus
+                      // 3) hasfocus same as v.has focus
                       if (hasFocus){
-                          //                     controller.setVisibility(View.INVISIBLE);
-
-                        //  if (controller.isShowing())
-                     //     if (controller != null)
-                       //       controller.hide();
-                         //    controller.setVisibility(View.INVISIBLE);
+                      //  if ( v.isFocused()){
+                          Log.e("search change !!!"," Search Text has focus !!!! ");
                           int count2 = count % 2;
                           count++;
-                    //      txtSearch2.setText("tsearch has focus "+count2);
+
                           txtSearch.setText("");
                           InputMethodManager imm = (InputMethodManager)getSystemService(Context.INPUT_METHOD_SERVICE);
-
-                         View v1= findViewById(R.id.keyboardview);
-                         imm.showSoftInput(v1, 0);
-//                          controller.hide();
-
                           v.setBackgroundColor(Color.WHITE);
-                          controller.setVisibility(View.INVISIBLE);
+                          if (controller.isShowing()) {
+                           //   View v2 = findViewById(R.id.controllerview);
+                            //  v2.setVisibility(View.INVISIBLE);
+                              controller.hide();
+                          //    controller.setVisibility(View.INVISIBLE);
+                          }
+                          searchmode=true;
+                          View v1= findViewById(R.id.keyboardview);
+                          v1.setVisibility(View.VISIBLE);
+                          imm.showSoftInput(v1, 0);
 
                       } else {
-                          //       controller.setVisibility(View.VISIBLE);
-                          //   controller.show(0);
+
                           v.setBackgroundColor(Color.CYAN);
                           InputMethodManager imm = (InputMethodManager)getSystemService(Context.INPUT_METHOD_SERVICE);
+                         // View v1= findViewById(R.id.keyboardview);
                           imm.hideSoftInputFromWindow(v.getWindowToken(), 0);
-                           controller.setVisibility(View.VISIBLE);
-                      //    txtSearch2.setText("txtSearch notfocused");
+                          View v1= findViewById(R.id.keyboardview);
+                          v1.setVisibility(View.INVISIBLE);
+                       //   imm.hideSoftInputFromInputMethod(v.getWindowToken(), 0);
+                          if (controller.isShowing()==false) {
+                              View v2 = findViewById(R.id.controllerview);
+                              controller.show();
+                           //   v2.setVisibility(View.VISIBLE);
+                            //  controller.setVisibility(View.VISIBLE);
+                          }
+                          searchmode=false;
+                          Log.e("search change !!!"," Search Text DOES NOT HAVE focus !!!! ");
+                          /*
+                          new friday paul
+                          tvLastSearch.setBackgroundColor(Color.CYAN);
+                          tvLastSearch.setTextColor(Color.BLACK);
+                         // tvLastSearch.setText(searchTerm+"");
+                          txtSearch.setText("");
+                          tvLastSearch.setVisibility(View.VISIBLE);
+                          tvLastSearch.requestFocus();
+                          searchmode=false;*/
+
                       }
-                      // Context context = v.getContext();
+
 
 
               }
+
         }
 
         );
@@ -393,7 +391,8 @@ Log.e("search change !!!"," Search Text "+txtSearch.getText()+ " that was the te
         //  l.setEnabled(false);
         //   InputMethodManager imm = (InputMethodManager)getSystemService(Context.INPUT_METHOD_SERVICE);
         //  imm.hideSoftInputFromWindow(l.getWindowToken(), 0);
-        this.getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
+
+     //  paul sat - this.getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
         Button btnlyric = (Button) findViewById(R.id.lyricButton);
 
         btnlyric.setOnClickListener(new View.OnClickListener() {
@@ -405,30 +404,16 @@ Log.e("search change !!!"," Search Text "+txtSearch.getText()+ " that was the te
                 if (v != null) {
                     InputMethodManager imm = (InputMethodManager)getSystemService(Context.INPUT_METHOD_SERVICE);
                     imm.hideSoftInputFromWindow(v.getWindowToken(), 0);
-             //       if (controller != null)
-               //       controller.setVisibility(View.INVISIBLE);
+
                 }
                 Log.i(" paths", "base context path " + getBaseContext() + "");
-
-
-
-
                 // Perform action on click
                 toggleView();
 
-
-
-
             }
         });
-
         // Search functionality
 
-
-       // int i = r.getCheckedRadioButtonId();
-        RadioButton rbSearchArtist = (RadioButton) findViewById(R.id.radioButton3);
-        RadioButton rbSearchSong= (RadioButton) findViewById(R.id.radioButton4);
-        Button btnSearch = (Button) findViewById(searchButton);
         songView = (ListView) findViewById(song_list);
         songList = new ArrayList<Song>();
 
@@ -443,13 +428,9 @@ Log.e("search change !!!"," Search Text "+txtSearch.getText()+ " that was the te
                     InputMethodManager imm = (InputMethodManager)getSystemService(Context.INPUT_METHOD_SERVICE);
                     imm.hideSoftInputFromWindow(v.getWindowToken(), 0);
                 }
-             //   TextView searchTerm = (TextView) findViewById(R.id.txtSearch);
+
                 String searchTerm=txtSearch.getText().toString() ;
                 Log.i(" paths", "base context path " + getBaseContext() + "");
-
-
-                searchmode=true;
-
                 // Perform action on click
                 toggleSearch();
                 if (searchTerm.length()>0){
@@ -464,7 +445,6 @@ Log.e("search change !!!"," Search Text "+txtSearch.getText()+ " that was the te
 
                     SongAdapter songAdt = new SongAdapter(getBaseContext(), songList);
                     songView.setAdapter(songAdt);
-                //    setController();
 
                 }
                 else if (filter.equals("s")){
@@ -477,7 +457,6 @@ Log.e("search change !!!"," Search Text "+txtSearch.getText()+ " that was the te
 
                     SongAdapter songAdt = new SongAdapter(getBaseContext(), songList);
                     songView.setAdapter(songAdt);
-                 //   setController();
 
                 }
 
@@ -488,6 +467,8 @@ Log.e("search change !!!"," Search Text "+txtSearch.getText()+ " that was the te
                             return a.getTitle().compareTo(b.getTitle());
                         }
                     });
+                    SongAdapter songAdt = new SongAdapter(getBaseContext(), songList);
+                    songView.setAdapter(songAdt);
                 }
                 }
                 else {
@@ -498,19 +479,19 @@ Log.e("search change !!!"," Search Text "+txtSearch.getText()+ " that was the te
                             }
                         });
                     SongAdapter songAdt = new SongAdapter(getBaseContext(), songList);
+
                     songView.setAdapter(songAdt);
-                 //   setController();
+
 
                 }
-                TextView tvLastSearch= (TextView)findViewById(lastSearch);
+
                 tvLastSearch.setBackgroundColor(Color.CYAN);
                 tvLastSearch.setTextColor(Color.BLACK);
                 tvLastSearch.setText(searchTerm+"");
                 txtSearch.setText("");
                 tvLastSearch.setVisibility(View.VISIBLE);
-                tvLastSearch.requestFocus();
-
-
+             //   tvLastSearch.requestFocus();
+                searchmode=false;
 
             }
         });
@@ -541,13 +522,30 @@ Log.e("search change !!!"," Search Text "+txtSearch.getText()+ " that was the te
         });
         SongAdapter songAdt = new SongAdapter(this, songList);
         songView.setAdapter(songAdt);
-        songView.setOnFocusChangeListener(new OnFocusChangeListener() {
+     /*   songView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                songView.getSelectedView().setBackgroundColor(Color.RED);
+
+            }
+        });
+   */     songView.setOnFocusChangeListener(new OnFocusChangeListener() {
             @Override
             public void onFocusChange(View v, boolean hasFocus) {
 
                 if (v.hasFocus()) {
-                    if (songView.getSelectedView() != null)
-                    songView.getSelectedView().setBackgroundColor(Color.parseColor("#ff6d00"));
+                    if (songView.getSelectedView() != null){
+                        // songView.getSelectedView().setBackgroundColor(Color.parseColor("#ff6d00"));
+                        songView.getSelectedView().setBackgroundColor(Color.RED);
+              /*does fuck all      InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+                    // View v1= findViewById(R.id.keyboardview);
+                    imm.hideSoftInputFromWindow(v.getWindowToken(), 0);
+
+                    //   imm.hideSoftInputFromInputMethod(v.getWindowToken(), 0);
+                    */
+                    controller.setVisibility(View.VISIBLE);
+                    searchmode = false;
+                }
                  //   v.setBackgroundColor(Color.parseColor("#ff6d00"));
                 }
              //   else
@@ -669,66 +667,82 @@ Log.e("search change !!!"," Search Text "+txtSearch.getText()+ " that was the te
         return sb.toString();
 
     }
+    /* called in song.xml */
     public void songPicked(View view) {
-        musicSrv.setSong(Integer.parseInt(view.getTag().toString()));
-        musicSrv.playSong();
-        String ls = musicSrv.getLyric();
-        songTitle = musicSrv.getCurSong();
-        songArtist = musicSrv.getCurArtist();
-        //      responseView = (TextView) findViewById(R.id.responseView);
-        //     emailText = (EditText) findViewById(R.id.emailText);
-        //    progressBar = (ProgressBar) findViewById(R.id.progressBar);
-        //   TextView l=(TextView)findViewById(R.id.txtLyric);
 
-        //   l.setText(ls);
-        TextView lastSearch=(TextView)findViewById(R.id.lastSearch);
-        lastSearch.setVisibility(View.VISIBLE);
-        lastSearch.setText(songTitle);
-        rt = null;
-        rt =
-                new RetrieveFeedTask();
-        rt.execute();
+            musicSrv.setSong(Integer.parseInt(view.getTag().toString()));
+            musicSrv.playSong();
+            String ls = musicSrv.getLyric();
+            songTitle = musicSrv.getCurSong();
+            songArtist = musicSrv.getCurArtist();
+          if (lastSong != null)
+             lastSong.setBackgroundColor(colorPrimary);
+      //  ColorDrawable viewColor = (ColorDrawable) view.getBackground().;
+      //  int colorId = viewColor.getColor();
+        //    lastSong.setBackgroundColor(colorId);
+            view.setBackgroundColor(Color.RED);
+        lastSong=view;
 
-        if (playbackPaused) {
-         //   setController();
+            //  txtNowPlaying
+            //      responseView = (TextView) findViewById(R.id.responseView);
+            //     emailText = (EditText) findViewById(R.id.emailText);
+            //    progressBar = (ProgressBar) findViewById(R.id.progressBar);
+            //   TextView l=(TextView)findViewById(R.id.txtLyric);
+
+            //   l.setText(ls);
+            TextView picked = (TextView) findViewById(R.id.txtNowPlaying);
+            picked.setVisibility(View.VISIBLE);
+            picked.setText(songArtist + " - " + songTitle);
+            rt = null;
+            rt =
+                    new RetrieveFeedTask();
+            rt.execute();
+
+            if (playbackPaused) {
+
+                playbackPaused = false;
+            }
+
+            //  setController();
+            // controller.setVisibility DOES NOTHINGco
+     //   if (searchmode==false) {
+
+
             controller.setVisibility(View.VISIBLE);
 
-            playbackPaused = false;
-        }
-
-      //  setController();
-        // controller.setVisibility DOES NOTHINGco
-
-        controller.setVisibility(View.VISIBLE);
-   //     controller.setAnchorView(findViewById(controllerview));
-        controller.show(0);
+            controller.show(0);
+        searchmode=false;
+     //   tvLastSearch.requestFocus();
+       // }
     }
+
     private void setController() {
         //set the controller up
-        if (controller== null)
-          controller = new MusicController(this);
-       // controller.setAnchorView(findViewById(controllerview));
-        // LayoutParams lp = new LayoutParams();
-        //lp.
-       // controller.setLayoutParams();
-        controller.setPrevNextListeners(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                playNext();
-            }
-        }, new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                playPrev();
-            }
-        });
+        if (controller == null){
+            controller = new MusicController(this);
+
+
+        controller.setPrevNextListeners(
+                new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        playNext();
+                    }
+                }, new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        playPrev();
+                    }
+                });
         controller.setMediaPlayer(this);
-     //   controller.setAnchorView(findViewById(mainview));
+        //  controller.
+        //   controller.setAnchorView(findViewById(mainview));
         controller.setAnchorView(findViewById(controllerview));
         controller.setEnabled(true);
+    }
    //     controller.setVisibility(View.VISIBLE);
-      //  if (! controller.isShowing())
-       //     controller.show(0);
+    //    if (! controller.isShowing())
+      //      controller.show(0);
     }
 
     //connect to the service
@@ -752,13 +766,15 @@ Log.e("search change !!!"," Search Text "+txtSearch.getText()+ " that was the te
 
     @Override
     protected void onStart() {
-        super.onStart();
-        if (playIntent == null) {
-            playIntent = new Intent(this, MusicService.class);
-            bindService(playIntent, musicConnection, Context.BIND_AUTO_CREATE);
-            startService(playIntent);
-            // musicConnection.
-        }
+     //   if (searchmode==false) {
+            super.onStart();
+            if (playIntent == null) {
+                playIntent = new Intent(this, MusicService.class);
+                bindService(playIntent, musicConnection, Context.BIND_AUTO_CREATE);
+                startService(playIntent);
+                // musicConnection.
+            }
+      //  }
     }
 
     @Override
@@ -869,7 +885,7 @@ Log.e("search change !!!"," Search Text "+txtSearch.getText()+ " that was the te
     public void pause() {
         musicSrv.pausePlayer();
         playbackPaused = true;
-
+        controller.show(0);
         //paulnew
       //  controller.setSelected(true);
     }
@@ -877,11 +893,15 @@ Log.e("search change !!!"," Search Text "+txtSearch.getText()+ " that was the te
     @Override
     public void seekTo(int pos) {
         musicSrv.seek(pos);
+        controller.show(0);
     }
 
     @Override
     public void start() {
         musicSrv.playSong();
+        playbackPaused = false;
+
+        controller.show(0);
      //   musicSrv.go();
     }
 
@@ -988,6 +1008,11 @@ Log.e("search change !!!"," Search Text "+txtSearch.getText()+ " that was the te
             TextView l = (TextView) findViewById(R.id.txtLyric);
 
             l.setText("bob is waiting...");
+            songTitle = musicSrv.getCurSong();
+            songArtist = musicSrv.getCurArtist();
+            TextView picked = (TextView) findViewById(R.id.txtNowPlaying);
+            picked.setVisibility(View.VISIBLE);
+            picked.setText(songArtist + " - " + songTitle);
         }
 
         String prepText(String s) {
