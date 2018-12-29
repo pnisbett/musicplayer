@@ -12,7 +12,11 @@ public class MusicController extends MediaController {
     public MusicController(Context c){
         super(c);
     }
-
+    @Override
+    public void hide() {
+        // TODO Auto-generated method stub
+        //do nothing
+    }
    /* public void hide(){
         this.hide();
     }

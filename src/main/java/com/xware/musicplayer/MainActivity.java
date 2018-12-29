@@ -129,6 +129,7 @@ public class MainActivity extends Activity implements MediaPlayerControl {
     public MainActivity() {
 
     }
+
     protected void toggleView() {
 
         boolean t = false;
@@ -228,8 +229,14 @@ public class MainActivity extends Activity implements MediaPlayerControl {
 
          @Override
          public boolean onTouch(View v, MotionEvent event) {
-         /*    controller.hide();
-             txtSearch2.setText("txtSearch onTouchListener called onTouch");
+        //     controller.setVisibility(View.GONE);
+             if (controller.isShowing())
+                 controller.setVisibility(View.GONE);
+           //  controller.hide();
+         //    InputMethodManager imm = (InputMethodManager)getSystemService(Context.INPUT_METHOD_SERVICE);
+           //  View v1= findViewById(R.id.keyboardview);
+           //  imm.showSoftInput(v1, 0);
+          /*   txtSearch2.setText("txtSearch onTouchListener called onTouch");
              if (v.hasFocus())
                  txtSearch.setText("ontouch clickdd has focusr");
              else
@@ -269,25 +276,10 @@ public class MainActivity extends Activity implements MediaPlayerControl {
             // Context context = v.getContext();
 
 
-        /*     if (event.getAction() == MotionEvent.ACTION_DOWN ) {
-               //  controller.hide();
-
-                 InputMethodManager imm = (InputMethodManager)getSystemService(Context.INPUT_METHOD_SERVICE);
-
-                 View v1= findViewById(R.id.keyboardview);
-             //    if (imm.isActive() == false)
-                     imm.showSoftInput(v1, 0);
-
-
-
-                 return true;
-             }
-             */
+*/
              return false;
          }
      });
-
-
       //     tsearch.onWindowFocusChanged() -- window encapsulating the view focus has changed
   /*      tvLastSearch.setOnTouchListener(new View.OnTouchListener() {
 
@@ -329,19 +321,73 @@ Log.e("search change !!!"," Search Text "+txtSearch.getText()+ " that was the te
                           int count2 = count % 2;
                           count++;
 
-                          txtSearch.setText("");
+                          txtSearch.setText("txtSearch has focus");
                           InputMethodManager imm = (InputMethodManager)getSystemService(Context.INPUT_METHOD_SERVICE);
                           v.setBackgroundColor(Color.WHITE);
                           if (controller.isShowing()) {
-                           //   View v2 = findViewById(R.id.controllerview);
+                             View v2 = findViewById(R.id.controllerview);
                             //  v2.setVisibility(View.INVISIBLE);
-                              controller.hide();
-                          //    controller.setVisibility(View.INVISIBLE);
+                              Log.e("search change !!!"," CONTR0LLER IS SHOWING !!! ");
+                            //  controller.hide();
+
+                             controller.setVisibility(View.GONE);
+                              v2.setVisibility(View.INVISIBLE);
+                              Log.e("search change !!!"," CONTR0LLER IS NOT SHOWING !!! ");
                           }
                           searchmode=true;
                           View v1= findViewById(R.id.keyboardview);
-                          v1.setVisibility(View.VISIBLE);
-                          imm.showSoftInput(v1, 0);
+                      //    v1.setVisibility(View.VISIBLE);
+                       //   txtSearch.setFocusable(true);
+                       //   txtSearch.requestFocus();
+                          boolean b = imm.isActive(); // imm.showSoftInput(txtSearch, 0);
+                       //  b =imm.showSoftInput(txtSearch, InputMethodManager.SHOW_FORCED);
+                   //       imm.toggleSoftInput(InputMethodManager.SHOW_FORCED, 0);
+
+                         b= imm.showSoftInput(v1, 0);
+                    //      txtSearch.setFocusable(true);
+                      //    txtSearch.requestFocus();
+                        //  boolean b =imm.
+                     ///     b= v1.isShown();
+                          if (b) {
+                              Log.e("search change !!!", " KEYBOARD is active SHOULD BE SHOWING !!! ");
+                            //  imm.toggleSoftInput(InputMethodManager.SHOW_FORCED, 0);
+                          }
+                          else{
+                              //This only happens if the music player is playing before searchtext is first entered
+                            // it is like the player prevwnrs the softinputform showing
+                           //   error cased by toggleSoftInput below is : Cancelling event due to no window focus: KeyEvent
+                              Log.e("search change !!!"," KEYBOARD is not  active SHOW SOFT INPUT FAILED !!! KEYBORD NOT  SHOWING !!! ");
+                          //does fuck all    getWindow().makeActive();
+
+                              //        stopService(playIntent);
+
+
+                        //      unbindService(musicConnection);
+
+                           //   musicSrv = null;
+                         //     imm.showSoftInput(txtSearch, InputMethodManager.SHOW_IMPLICIT);
+                           //   if (txtSearch.requestFocus()) {
+
+                               //   imm = (InputMethodManager)getSystemService(Context.INPUT_METHOD_SERVICE);
+                                  // new Thread(new Runnable() {
+                              txtSearch.post(new Runnable(){
+                                    //  @Override
+                                     public void run() {
+                                       InputMethodManager imm = (InputMethodManager)getSystemService(Context.INPUT_METHOD_SERVICE);
+                                          //
+
+                                          imm.showSoftInput(txtSearch, InputMethodManager.SHOW_IMPLICIT);
+                                      //    Log.e("search change !!!","NEW RUNNABLE STARTED FUCK ANDROID !!! ");
+
+                                     }
+                                //  }).start();
+                                  //imm.toggleSoftInput(InputMethodManager.SHOW_FORCED, 0);
+                              });
+                          }
+
+                          if (b)
+                              Toast.makeText(v.getContext(),"soft input fucked up !!!!!",Toast.LENGTH_LONG);
+
 
                       } else {
 
@@ -355,7 +401,7 @@ Log.e("search change !!!"," Search Text "+txtSearch.getText()+ " that was the te
                           if (controller.isShowing()==false) {
                               View v2 = findViewById(R.id.controllerview);
                               controller.show();
-                           //   v2.setVisibility(View.VISIBLE);
+                              v2.setVisibility(View.VISIBLE);
                             //  controller.setVisibility(View.VISIBLE);
                           }
                           searchmode=false;
@@ -490,8 +536,12 @@ Log.e("search change !!!"," Search Text "+txtSearch.getText()+ " that was the te
                 tvLastSearch.setText(searchTerm+"");
                 txtSearch.setText("");
                 tvLastSearch.setVisibility(View.VISIBLE);
+              //  tvLastSearch.requestFocus();
              //   tvLastSearch.requestFocus();
                 searchmode=false;
+                View v2 = findViewById(R.id.controllerview);
+                v2.setVisibility(View.VISIBLE);
+              //  controller.show();
 
             }
         });
@@ -553,8 +603,10 @@ Log.e("search change !!!"," Search Text "+txtSearch.getText()+ " that was the te
 
             }
         });
-    setController();
-
+   setController();
+    //    tvLastSearch.requestFocus();
+        txtSearch.requestFocus();
+     //   btnSearch.callOnClick();
     //end of onCreate()
 
     }
@@ -772,7 +824,7 @@ Log.e("search change !!!"," Search Text "+txtSearch.getText()+ " that was the te
                 playIntent = new Intent(this, MusicService.class);
                 bindService(playIntent, musicConnection, Context.BIND_AUTO_CREATE);
                 startService(playIntent);
-                // musicConnection.
+                //controller change to pause button
             }
       //  }
     }
@@ -789,59 +841,70 @@ Log.e("search change !!!"," Search Text "+txtSearch.getText()+ " that was the te
     }
 
     public void getSongList() {
-        //retrieve song info
-        ContentResolver musicResolver = getContentResolver();
-        Uri musicUri = android.provider.MediaStore.Audio.Media.EXTERNAL_CONTENT_URI;
-        Cursor musicCursor = musicResolver.query(musicUri, null, null, null, null);
-        if (musicCursor != null && musicCursor.moveToFirst()) {
-            //get columns
-            int titleColumn = musicCursor.getColumnIndex
-                    (android.provider.MediaStore.Audio.Media.TITLE);
-            int idColumn = musicCursor.getColumnIndex
-                    (android.provider.MediaStore.Audio.Media._ID);
-            int artistColumn = musicCursor.getColumnIndex
-                    (android.provider.MediaStore.Audio.Media.ARTIST);
-            //add songs to list
-            do {
-                long thisId = musicCursor.getLong(idColumn);
-                String thisTitle = musicCursor.getString(titleColumn);
-                String thisArtist = musicCursor.getString(artistColumn);
-                songList.add(new Song(thisId, thisTitle, thisArtist));
-            }
-            while (musicCursor.moveToNext());
-        }
+        // new Thread(new Runnable() {
+           // public void run() {
+                //retrieve song info
+                ContentResolver musicResolver = getContentResolver();
+                Uri musicUri = android.provider.MediaStore.Audio.Media.EXTERNAL_CONTENT_URI;
+                Cursor musicCursor = musicResolver.query(musicUri, null, null, null, null);
+                if (musicCursor != null && musicCursor.moveToFirst()) {
+                    //get columns
+                    int titleColumn = musicCursor.getColumnIndex
+                            (android.provider.MediaStore.Audio.Media.TITLE);
+                    int idColumn = musicCursor.getColumnIndex
+                            (android.provider.MediaStore.Audio.Media._ID);
+                    int artistColumn = musicCursor.getColumnIndex
+                            (android.provider.MediaStore.Audio.Media.ARTIST);
+                    //add songs to list
+                    do {
+                        long thisId = musicCursor.getLong(idColumn);
+                        String thisTitle = musicCursor.getString(titleColumn);
+                        String thisArtist = musicCursor.getString(artistColumn);
+                        songList.add(new Song(thisId, thisTitle, thisArtist));
+                    }
+                    while (musicCursor.moveToNext());
+                }
+       //     }
+        //    }).start();
 
     }
-    public void getSongListFiltered(String artist,String songf) {
-        //retrieve song info
-        ContentResolver musicResolver = getContentResolver();
-        Uri musicUri = android.provider.MediaStore.Audio.Media.EXTERNAL_CONTENT_URI;
-        Cursor musicCursor = musicResolver.query(musicUri, null, null, null, null);
-        if (musicCursor != null && musicCursor.moveToFirst()) {
-            //get columns
-            int titleColumn = musicCursor.getColumnIndex
-                    (android.provider.MediaStore.Audio.Media.TITLE);
-            int idColumn = musicCursor.getColumnIndex
-                    (android.provider.MediaStore.Audio.Media._ID);
-            int artistColumn = musicCursor.getColumnIndex
-                    (android.provider.MediaStore.Audio.Media.ARTIST);
-            //add songs to list
-            do {
-                long thisId = musicCursor.getLong(idColumn);
-                String thisTitle = musicCursor.getString(titleColumn);
-                String thisArtist = musicCursor.getString(artistColumn);
-                if (artist != null) {
-                    if (checkMatch(artist, thisArtist,true))
-                        songList.add(new Song(thisId, thisTitle, thisArtist));
-                }
-                else{
-                    if(checkMatch(songf, thisTitle,true))
-                        songList.add(new Song(thisId, thisTitle, thisArtist));
+    public void getSongListFiltered(String artist1,String songf1) {
+        final String artist = artist1;
+        final String songf = songf1;
+      //  new Thread(new Runnable() {
+        //    public void run(){
+            //retrieve song info
+            ContentResolver musicResolver = getContentResolver();
+            Uri musicUri = android.provider.MediaStore.Audio.Media.EXTERNAL_CONTENT_URI;
+            Cursor musicCursor = musicResolver.query(musicUri, null, null, null, null);
+        if(musicCursor !=null&&musicCursor.moveToFirst())
 
+            {
+                //get columns
+                int titleColumn = musicCursor.getColumnIndex
+                        (android.provider.MediaStore.Audio.Media.TITLE);
+                int idColumn = musicCursor.getColumnIndex
+                        (android.provider.MediaStore.Audio.Media._ID);
+                int artistColumn = musicCursor.getColumnIndex
+                        (android.provider.MediaStore.Audio.Media.ARTIST);
+                //add songs to list
+                do {
+                    long thisId = musicCursor.getLong(idColumn);
+                    String thisTitle = musicCursor.getString(titleColumn);
+                    String thisArtist = musicCursor.getString(artistColumn);
+                    if (artist != null) {
+                        if (checkMatch(artist, thisArtist, true))
+                            songList.add(new Song(thisId, thisTitle, thisArtist));
+                    } else {
+                        if (checkMatch(songf, thisTitle, true))
+                            songList.add(new Song(thisId, thisTitle, thisArtist));
+
+                    }
                 }
+                while (musicCursor.moveToNext());
             }
-            while (musicCursor.moveToNext());
-        }
+        //}
+       // }).start();
 
     }
     @Override
@@ -1074,43 +1137,46 @@ Log.e("search change !!!"," Search Text "+txtSearch.getText()+ " that was the te
 
         protected String getTrackSearchData() {
 
-            String mm = "http://api.musixmatch.com/ws/1.1/track.search?apikey=86c87a879ef9074845e49bef93351d12&q_track=" + songTitle + "&q_artist=" + songArtist + "&page_size=10";
+         //   String mm = "http://api.musixmatch.com/ws/1.1/track.search?apikey=86c87a879ef9074845e49bef93351d12&q_track=" + songTitle + "&q_artist=" + songArtist + "&page_size=10";
             String apikey =  "34b8bba02482d8369f31edf0d82ff1f4";
-             mm = "http://api.musixmatch.com/ws/1.1/track.search?apikey="+apikey+"&q_track=" + songTitle + "&q_artist=" + songArtist + "&page_size=10";
-
-            try {
-                URL url = new URL(mm);
-
-                HttpURLConnection urlConnection = (HttpURLConnection) url.openConnection();
-
+          final String  mm = "http://api.musixmatch.com/ws/1.1/track.search?apikey="+apikey+"&q_track=" + songTitle + "&q_artist=" + songArtist + "&page_size=10";
+           String ret="";
+      //       new Thread(new Runnable() {
+        //    public void run() {
                 try {
-                    BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(urlConnection.getInputStream()));
-                    StringBuilder stringBuilder = new StringBuilder();
-                    String line;
-                    while ((line = bufferedReader.readLine()) != null) {
-                        if ((line.indexOf("track_id") > 0) || (line.indexOf("track_name") > 0))
-                            stringBuilder.append(line).append("\n");
+                    URL url = new URL(mm);
+
+                    HttpURLConnection urlConnection = (HttpURLConnection) url.openConnection();
+
+                    try {
+                        BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(urlConnection.getInputStream()));
+                        StringBuilder stringBuilder = new StringBuilder();
+                        String line;
+                        while ((line = bufferedReader.readLine()) != null) {
+                            if ((line.indexOf("track_id") > 0) || (line.indexOf("track_name") > 0))
+                                stringBuilder.append(line).append("\n");
+                        }
+                        bufferedReader.close();
+                        //   String [] keys= {"track_id","track_name"};
+                        //   String v =JsonHandler.getValue(keys,stringBuilder.toString());
+//ret=stringBuilder.toString();
+                        return stringBuilder.toString();
+                        //  return v ;
+
+
+                    } catch (Exception e) {
+                        Log.e("ERROR", e.getMessage(), e);
+                        return " this music service sucks ass!" + e.getMessage();
+                        //             return null;
+                    } finally {
+                        urlConnection.disconnect();
                     }
-                    bufferedReader.close();
-                    //   String [] keys= {"track_id","track_name"};
-                    //   String v =JsonHandler.getValue(keys,stringBuilder.toString());
-
-                    return stringBuilder.toString();
-                    //  return v ;
-
-
                 } catch (Exception e) {
                     Log.e("ERROR", e.getMessage(), e);
                     return " this music service sucks ass!" + e.getMessage();
-                    //             return null;
-                } finally {
-                    urlConnection.disconnect();
-                }
-            } catch (Exception e) {
-                Log.e("ERROR", e.getMessage(), e);
-                return " this music service sucks ass!" + e.getMessage();
 
-            }
+                }
+
 
 
         }
